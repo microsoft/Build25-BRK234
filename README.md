@@ -78,64 +78,15 @@ If you're not using one of the above options for opening the project, then you'l
     ```shell
     pip install -r requirements-dev.txt
     ```
- - Review SUPPORT.md and make any additions you'd like to support for help.
-   
-## Elevating your permissions
-In order to take administrative steps, including making your repo public, you will need to elevate your account to Admin permissions temporarily.
-1. Visit this repos homepage in the opensource portal at https://repos.opensource.microsoft.com/orgs/microsoft/repos/<this-repo>.
-1. On the right side of the page, under Direct Owner access, click Elevate your access and follow the prompts for Just-in time access.
-1. Come back to github, and refresh the repo.  You should see a new Settings tab.
 
-## Release Steps
-1. Make sure you've followed steps at [https://docs.opensource.microsoft.com/releasing/](https://docs.opensource.microsoft.com/releasing/) regarding the release of your code.
-1. When you're ready to set the repo live:
-1. Make sure this "using this repo" section of the readme is deleted, e.g. everything above the banner graphic.
-1. Elevate your permissions to the repo in the open source portal.
-1. Come back to github, and click on the repo's `Settings` tab.
-1. Scroll down to the danger zone and click to change visibility of the repo.  Make the repos visibility `Public`.
-
-<p align="center">
-<img src="img/banner.jpg" alt="decorative banner" width="1200"/>
-</p>
-# Build25 [SESSION ID] - [SESSION TITLE]
-
-## Description
-
-<<<<<<< HEAD
-Add your session description and information.  Feel free to retitle this heading.
-=======
-### Deploying
->>>>>>> 78099b8 (Merge in the actual repo files)
-
-## Content Owners
-
-<<<<<<< HEAD
-Add Speaker name(s) and titles (required)
-Add your likeness (optional)
-=======
-#### Azure account setup
->>>>>>> 78099b8 (Merge in the actual repo files)
-
-## Session Resources 
-
-<<<<<<< HEAD
-| Resources          | Links                             | Description        |
-|:-------------------|:----------------------------------|:-------------------|
-| Build session page | https://build.microsoft.com/sessions/BRK234 | Event session page with downloadable recording, slides, resources, and speaker bio |
-| Session recording on YouTube | https://aka.ms/build2025/video/BRK234 | YouTube page with session recoding and speaker-moderated chat |
-|Microsoft Learn|aka.ms/build25/plans/friendlyname<br>aka.ms/build25/collection/friendlyname|Official Collection or Plan with skilling resources to learn at your own pace|
-=======
 #### Deploying with azd
->>>>>>> 78099b8 (Merge in the actual repo files)
 
+1. Make sure you are logged in to Azure:
 
-## Contributing
+    ```shell
+    azd auth login
+    ```
 
-<<<<<<< HEAD
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-=======
 2. Create a new azd environment:
 
     ```shell
@@ -183,14 +134,11 @@ the rights to use your contribution. For details, visit https://cla.opensource.m
     ```
 
 4. If you are *not* using a VNet, then you can use `up` command to provision and deploy all the resources in the same command:
->>>>>>> 78099b8 (Merge in the actual repo files)
 
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide
 a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
 provided by the bot. You will only need to do this once across all repos using our CLA.
 
-<<<<<<< HEAD
-=======
 5. If you are using a VNet, you will need to first provision the environment with the virtual network configured:
 
     ```bash
@@ -265,17 +213,10 @@ When you submit a pull request, a CLA bot will automatically determine whether y
 a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
 provided by the bot. You will only need to do this once across all repos using our CLA.
 
->>>>>>> 78099b8 (Merge in the actual repo files)
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-<<<<<<< HEAD
-## Trademarks 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow Microsoft’s Trademark & Brand Guidelines. Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party’s policies.
-
-=======
 ## Trademarks
 
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow Microsoft’s Trademark & Brand Guidelines. Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party’s policies.
->>>>>>> 78099b8 (Merge in the actual repo files)
