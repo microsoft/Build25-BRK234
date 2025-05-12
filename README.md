@@ -79,9 +79,28 @@ If you're not using one of the above options for opening the project, then you'l
     pip install -r requirements-dev.txt
     ```
 
+6. Install the app in editable mode:
+
+    ```shell
+    python -m pip install -e src
+    ```
+
+7. Continue with the [deploying steps](#deploying).
+
+### Deploying
+
+Once you've opened the project in [Codespaces](#github-codespaces), in [Dev Containers](#vs-code-dev-containers), or [locally](#local-environment), you can deploy it to Azure.
+
+#### Azure account setup
+
+1. Sign up for a [free Azure account](https://azure.microsoft.com/free/) and create an Azure Subscription.
+2. Check that you have the necessary permissions:
+    * Your Azure account must have `Microsoft.Authorization/roleAssignments/write` permissions, such as [Role Based Access Control Administrator](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#role-based-access-control-administrator-preview), [User Access Administrator](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#user-access-administrator), or [Owner](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#owner). If you don't have subscription-level permissions, you must be granted [RBAC](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#role-based-access-control-administrator-preview) for an existing resource group and [deploy to that existing group](/docs/deploy_existing.md#resource-group).
+    * Your Azure account also needs `Microsoft.Resources/deployments/write` permissions on the subscription level.
+
 #### Deploying with azd
 
-1. Make sure you are logged in to Azure:
+1. Login to Azure:
 
     ```shell
     azd auth login
@@ -135,9 +154,9 @@ If you're not using one of the above options for opening the project, then you'l
 
 4. If you are *not* using a VNet, then you can use `up` command to provision and deploy all the resources in the same command:
 
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+    ```shell
+    azd env new
+    ```
 
 5. If you are using a VNet, you will need to first provision the environment with the virtual network configured:
 
