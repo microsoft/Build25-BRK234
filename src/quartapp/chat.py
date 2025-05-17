@@ -1,3 +1,4 @@
+import base64
 import json
 import os
 
@@ -55,9 +56,28 @@ async def shutdown_openai():
     await bp.openai_client.close()
 
 
+def extract_login_info(headers) -> tuple[str, str]:
+    """
+    If the X-MS-CLIENT-PRINCIPAL header is present, decode it and
+    extract the username from the claims.
+
+    Returns a tuple of (is_authenticated, username).
+    """
+    default_username = "You"
+    if "X-MS-CLIENT-PRINCIPAL" not in headers:
+        return None, default_username
+
+    token = json.loads(base64.b64decode(headers.get("X-MS-CLIENT-PRINCIPAL")))
+    claims = {claim["typ"]: claim["val"] for claim in token["claims"]}
+    return True, claims.get("name", default_username)
+
+
 @bp.get("/")
 async def index():
-    return await render_template("index.html")
+    is_authenticated, username = extract_login_info(request.headers)
+    return await render_template("index.html", 
+        is_authenticated=is_authenticated,
+        username=username)
 
 
 @bp.post("/chat/stream")
