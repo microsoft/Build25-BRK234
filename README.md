@@ -206,10 +206,15 @@ It also depends on whether you choose to enable the optional features (like Azur
 You can try the [Azure pricing calculator](https://azure.com/e/3987c81282c84410b491d28094030c9a) for the resources:
 
 * Azure OpenAI Service: S0 tier, GPT-4o model. Pricing is based on token count. [Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
-* Azure Container App: Consumption tier with 0.5 CPU, 1GiB memory/storage. Pricing is based on resource allocation, and each month allows for a certain amount of free usage. [Pricing](https://azure.microsoft.com/pricing/details/container-apps/)
-* Azure Container Registry: Basic tier. [Pricing](https://azure.microsoft.com/pricing/details/container-registry/)
-* Log analytics: Pay-as-you-go tier. Costs based on data ingested. [Pricing](https://azure.microsoft.com/pricing/details/monitor/)
-* TODO: More services
+* Azure Container App: Consumption tier when no virtual network is needed, Workload profiles when virtual network is added (required for private links). [Pricing](https://azure.microsoft.com/pricing/details/container-apps/)
+* Azure Container Registry: Standard tier when no virtual network is needed, Premium tier when virtual network is added (required for private links). [Pricing](https://azure.microsoft.com/pricing/details/container-registry/)
+* Log analytics (Optional): Pay-as-you-go tier. Costs based on data ingested. [Pricing](https://azure.microsoft.com/pricing/details/monitor/)
+* Virtual Network (Optional): Pay-as-you-go tier. Costs based on data processed. [Pricing](https://azure.microsoft.com/pricing/details/virtual-network/)
+* Azure Private DNS Resolver (Optional): 1 inbound endpoint, 8 DNS zones. Pricing is per month, endpoints, and zones. [Pricing](https://azure.microsoft.com/pricing/details/dns/)
+* Azure Private Endpoints (Optional): 1 endpoint per service (OpenAI, Log Analytics, Container Registry, Container Apps). Pricing is per hour per endpoint. [Pricing](https://azure.microsoft.com/pricing/details/private-link/)
+* VPN Gateway (Optional): VpnGw2AZ SKU with support for availability zones. Base monthly cost plus hourly cost based on number of connections. [Pricing](https://azure.microsoft.com/pricing/details/vpn-gateway/)
+* Azure Front Door (Optional): Premium tier ([required for private links](https://learn.microsoft.com/azure/frontdoor/private-link)). Costs include a base fee and costs per data transfers. Includes Web Application Firewall. [Pricing](https://azure.microsoft.com/pricing/details/front-door/)
+* Azure DDOS Protection (Optional): Pricing per month. [Pricing](https://azure.microsoft.com/pricing/details/ddos-protection/)
 
 ⚠️ To avoid unnecessary costs, remember to take down your app if it's no longer in use,
 either by deleting the resource group in the Portal or running `azd down`.

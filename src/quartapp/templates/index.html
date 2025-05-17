@@ -15,6 +15,13 @@
 </head>
 <body>
     <main class="h-100 mh-100 d-flex flex-column overflow-hidden justify-content-start">
+        {% if is_authenticated %}
+        <div class="px-4 pt-2 d-flex justify-content-end">
+            <a href="/.auth/logout" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+        {% endif %}
         <div id="messages" class="px-4 pb-4 pt-2 flex-grow-1 overflow-y-auto overflow-x-hidden align-items-stretch">
             <h2 id="no-messages-heading" class="text-center">Chat with your uploaded images</h2>
             <template id="message-template-user">
@@ -23,7 +30,7 @@
                         <div class="toast-header text-light background-user">
                             <i class="bi bi-person me-1" aria-hidden="true"></i>
                             <strong class="me-auto text-capitalize">
-                                You
+                                {{ username }}
                             </strong>
                         </div>
                         <div class="toast-body message-file">

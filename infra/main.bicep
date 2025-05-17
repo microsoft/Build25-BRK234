@@ -125,8 +125,8 @@ module logAnalyticsWorkspace 'br/public:avm/res/operational-insights/workspace:0
     tags: tags
     skuName: 'PerGB2018'
     dataRetention: 30
-    publicNetworkAccessForIngestion: 'Disabled'
-    publicNetworkAccessForQuery: 'Disabled'
+    publicNetworkAccessForIngestion: useVnet ? 'Disabled' : 'Enabled'
+    publicNetworkAccessForQuery: useVnet ? 'Disabled' : 'Enabled'
     useResourcePermissions: true
   }
 }
@@ -262,16 +262,15 @@ module privateEndpointsNSG 'br/public:avm/res/network/network-security-group:0.5
   }
 }
 
-/*
-module ddosProtectionPlan 'br/public:avm/res/network/ddos-protection-plan:0.3.1' = if (useVnet) {
+
+module ddosProtectionPlan 'br/public:avm/res/network/ddos-protection-plan:0.3.1' = if (useVnet && useFrontDoor) {
   name: 'ddosProtectionPlanDeployment'
   scope: resourceGroup
   params: {
-    // Required parameters
     name: '${prefix}-ddos-protection-plan'
     location: location
   }
-}*/
+}
 
 // Virtual network for all resources
 module virtualNetwork 'br/public:avm/res/network/virtual-network:0.6.1' = if (useVnet) {
@@ -284,8 +283,8 @@ module virtualNetwork 'br/public:avm/res/network/virtual-network:0.6.1' = if (us
     addressPrefixes: [
       '10.0.0.0/16'
     ]
-    // TODO: When is DDOS actually needed? Only when a subnet has a "public IP"...
-    //ddosProtectionPlanResourceId: ddosProtectionPlan.outputs.resourceId // TODO: Conditional
+    // DDOS protection is only needed when a subnet has a "public IP"
+    ddosProtectionPlanResourceId: useFrontDoor? ddosProtectionPlan.outputs.resourceId : null
     subnets: [
       {
         name: 'container-apps-subnet'
@@ -623,14 +622,12 @@ module virtualNetworkGateway 'br/public:avm/res/network/virtual-network-gateway:
   }
 }
 
-// https://luke.geek.nz/azure/azure-point-to-site-vpn-and-private-dns-resolver/
+// Based on https://luke.geek.nz/azure/azure-point-to-site-vpn-and-private-dns-resolver/
 // Manual step required of updating azurevpnconfig.xml to use the correct DNS server IP address
-// TODO: Add documentation
 module dnsResolver 'br/public:avm/res/network/dns-resolver:0.5.3' = if (useVnet) {
   name: 'dnsResolverDeployment'
   scope: resourceGroup
   params: {
-    // Required parameters
     name: '${prefix}-dns-resolver'
     location: location
     virtualNetworkResourceId: virtualNetwork.outputs.resourceId
@@ -669,7 +666,7 @@ module openAiRoleUser 'core/security/role.bicep' = if (useKeylessAuth && empty(r
   name: 'openai-role-user'
   params: {
     principalId: principalId
-    roleDefinitionId: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd'
+    roleDefinitionId: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd' // Cognitive Services OpenAI User
     principalType: 'User'
   }
 }
@@ -679,7 +676,7 @@ module openAiRoleBackend 'core/security/role.bicep' = if (useKeylessAuth) {
   name: 'openai-role-backend'
   params: {
     principalId: aca.outputs.identityPrincipalId
-    roleDefinitionId: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd'
+    roleDefinitionId: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd'  // Cognitive Services OpenAI User
     principalType: 'ServicePrincipal'
   }
 }
@@ -722,11 +719,9 @@ module profile 'br/public:avm/res/cdn/profile:0.12.3' = if (useFrontDoor) {
   name: 'frontdoor'
   scope: resourceGroup
   params: {
-    // Required parameters
     name: '${prefix}-frontdoor'
     location: 'global'
     sku: 'Premium_AzureFrontDoor'
-    // Non-required parameters
     afdEndpoints: [
       {
         name: '${prefix}-frontdoor-endpoint'
