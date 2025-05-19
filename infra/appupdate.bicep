@@ -16,6 +16,8 @@ param blobContainerUri string = ''
 @description('The resource ID of the managed identity to be used for accessing the Azure Blob Storage.')
 param appIdentityResourceId string = ''
 
+param forwardHostHeader bool = false
+
 resource app 'Microsoft.App/containerApps@2023-05-01' existing = {
   name: containerAppName
 }
@@ -31,6 +33,12 @@ resource auth 'Microsoft.App/containerApps/authConfigs@2024-10-02-preview' = {
       redirectToProvider: 'azureactivedirectory'
       unauthenticatedClientAction: 'RedirectToLoginPage'
     }
+    httpSettings: forwardHostHeader ? {
+      forwardProxy: {
+        convention: 'Custom'
+        customHostHeaderName: 'X-Forwarded-Host'
+      }
+    } : {}
     identityProviders: {
       azureActiveDirectory: {
         enabled: true
