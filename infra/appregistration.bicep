@@ -41,6 +41,8 @@ param issuer string
 
 param webAppEndpoint string
 
+param frontDoorEndpoint string = ''
+
 // Get the MS Graph Service Principal based on its application ID:
 // https://learn.microsoft.com/troubleshoot/entra/entra-id/governance/verify-first-party-apps-sign-in
 var msGraphAppId = '00000003-0000-0000-c000-000000000000'
@@ -49,16 +51,20 @@ resource msGraphSP 'Microsoft.Graph/servicePrincipals@v1.0' existing = {
 }
 
 var graphScopes = msGraphSP.oauth2PermissionScopes
+var redirectUris = empty(frontDoorEndpoint) ? [
+  '${webAppEndpoint}/.auth/login/aad/callback'
+] : [
+  '${webAppEndpoint}/.auth/login/aad/callback'
+  '${frontDoorEndpoint}/.auth/login/aad/callback'
+]
+  
 resource clientApp 'Microsoft.Graph/applications@v1.0' = {
   uniqueName: clientAppName
   displayName: clientAppDisplayName
   signInAudience: 'AzureADMyOrg'
   serviceManagementReference: empty(serviceManagementReference) ? null : serviceManagementReference
   web: {
-    redirectUris: [
-      'http://localhost:50505/.auth/login/aad/callback'
-      '${webAppEndpoint}/.auth/login/aad/callback'
-    ]
+    redirectUris: redirectUris
     implicitGrantSettings: { enableIdTokenIssuance: true }
   }
   requiredResourceAccess: [

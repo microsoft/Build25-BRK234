@@ -688,6 +688,7 @@ module registration 'appregistration.bicep' = if (useLogin) {
     clientAppName: '${prefix}-entra-client-app'
     clientAppDisplayName: 'Secure Demo Entra Client App'
     webAppEndpoint: aca.outputs.uri
+    frontDoorEndpoint: useFrontDoor ? 'https://${profile.outputs.frontDoorEndpointHostNames[0]}' : ''
     webAppIdentityId: aca.outputs.identityPrincipalId
     issuer: issuer
     serviceManagementReference: serviceManagementReference
@@ -702,6 +703,7 @@ module appupdate 'appupdate.bicep' = if (useLogin) {
     clientId: registration.outputs.clientAppId
     openIdIssuer: issuer
     includeTokenStore: false
+    forwardHostHeader: useFrontDoor
   }
 }
 
