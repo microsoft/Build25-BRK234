@@ -24,7 +24,7 @@ param acaExists bool = false
 param openAiResourceLocation string
 
 @description('Flag to decide whether to create a role assignment for the user and app')
-param useKeylessAuth bool
+param useKeylessAuth bool = true
 
 @description('Flag to decide whether to add user login to the container app')
 param useLogin bool = true
