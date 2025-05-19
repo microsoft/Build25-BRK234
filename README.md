@@ -19,7 +19,7 @@ Security can be challenging at the best of times, especially when it’s not you
 | Resources          | Links                             | Description        |
 |:-------------------|:----------------------------------|:-------------------|
 | Build session page | https://build.microsoft.com/sessions/BRK234 | Event session page with downloadable recording, slides, resources, and speaker bio |
-| Session recording on YouTube | https://aka.ms/build2025/video/BRK234 | YouTube page with session recoding and speaker-moderated chat |
+| Session recording on YouTube | https://aka.ms/build2025/video/BRK234 | YouTube page with session recording and speaker-moderated chat |
 
 ## Code sample
 
