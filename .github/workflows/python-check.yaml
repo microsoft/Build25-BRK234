@@ -35,4 +35,4 @@ jobs:
           python -c "import quartapp; print('Package imported!')"
           python -c "from quartapp import create_app; print('create_app OK!')"
           python -c "import quartapp.chat; print('quartapp.chat imported!')"
-          python -c "app = quartapp.create_app(); print('App created!')"
+          python -c "import quartapp; app = quartapp.create_app(); print('App created!')"
