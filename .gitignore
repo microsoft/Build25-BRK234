@@ -329,6 +329,13 @@ paket-files/
 __pycache__/
 *.pyc
 
+# Python virtual environments (for testing)
+test_env/
+test_install/
+test_verification/
+venv/
+.venv/
+
 # Cake - Uncomment if you are using it
 # tools/**
 # !tools/packages.config
