@@ -332,6 +332,7 @@ __pycache__/
 # Python virtual environments (for testing)
 test_env/
 test_install/
+test_verification/
 venv/
 .venv/
 
