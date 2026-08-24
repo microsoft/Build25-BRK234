@@ -335,6 +335,7 @@ test_install/
 test_verification/
 venv/
 .venv/
+.venv_test/
 
 # Cake - Uncomment if you are using it
 # tools/**
